@@ -25,16 +25,36 @@ import org.testng.annotations.Test;
 @Test
 public class totpTest {
 
-    @Test public void testAll() {
+    @Test public void testGenSecret() {
         System.out.println ("Generated Secret = " + totp.getTotp().genSharedSecret() );
         System.out.println ("Generated Secret = " + totp.getTotp().genSharedSecret() );
         System.out.println ("Generated Secret = " + totp.getTotp().genSharedSecret() );
+    }
 
-
+    @Test public void testUrlGen() {
         String sec = totp.getTotp().genSharedSecret();
-        System.out.println ("API URL = " + totp.getTotp().getGoogleApiQrURL (sec, "test1", "assure"));
+        System.out.println ("API URL = " + totp.getTotp().getGoogleApiQrURL (sec, "test1", "system1"));
         sec = totp.getTotp().genSharedSecret();
-        System.out.println ("API URL = " + totp.getTotp().getGoogleApiQrURL (sec, "test2", "assure"));
+        System.out.println ("API URL = " + totp.getTotp().getGoogleApiQrURL (sec, "test2", "system2"));
+    }
+
+    @Test public void testVerify() {
+        long timeTest = System.currentTimeMillis()/1000/30;
+        timeTest = timeTest + 5;
+        String sec = totp.getTotp().genSharedSecret();
+        int code;
+
+        try {
+          code = totp.getTotp().getCode (sec, timeTest);
+        } catch (Exception e) {
+          Assert.fail ("Exception generating totp code, likely a platform or crypto misconfiguration");
+          return;
+        }
+
+        // totp.getTotp().verifyCode should be true, we will test 10 minutes before and after by default
+        Assert.assertTrue  (totp.getTotp().verifyCode(sec,code));
+        // Assert totp.getTotp().verifyCodeWithSkew (60) we skewed our code by 150 seconds, so this should fail
+        Assert.assertFalse (totp.getTotp().verifyCodeWithSkew(sec,code,60));
     }
 }
 
