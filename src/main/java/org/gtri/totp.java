@@ -122,6 +122,7 @@ public class totp {
      *    String description  - identifer that will show up in the user's smart phone totp application
      */
     public String getGoogleApiQrURL (String sharedSecret, String user, String host) {
+       /*
        String QrCode = String.format("otpauth://totp/%s@%s&secret=%s", user, host, sharedSecret);
        try {
            String EncodedQrCode = URLEncoder.encode (QrCode, "UTF-8");
@@ -130,6 +131,9 @@ public class totp {
            log.error ("Encoding Exception while attempting to URL encode QrCode {}", QrCode, e);
            return new String("http://failbot.org/");
        }
+       */
+       String format = "https://www.google.com/chart?chs=200x200&chld=M%%7C0&cht=qr&chl=otpauth://totp/%s@%s%%3Fsecret%%3D%s";
+       return String.format(format, user, host, sharedSecret);
     } 
 
 }

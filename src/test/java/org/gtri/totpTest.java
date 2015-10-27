@@ -34,8 +34,8 @@ public class totpTest {
     @Test public void testUrlGen() {
         String sec = totp.getTotp().genSharedSecret();
         System.out.println ("API URL = " + totp.getTotp().getGoogleApiQrURL (sec, "test1", "system1"));
-        sec = totp.getTotp().genSharedSecret();
-        System.out.println ("API URL = " + totp.getTotp().getGoogleApiQrURL (sec, "test2", "system2"));
+        sec = new String("PT5UMQIYF2O4ZEIG");
+        System.out.println ("API URL = " + totp.getTotp().getGoogleApiQrURL (sec, "test1", "assure"));
     }
 
     @Test public void testVerify() {
