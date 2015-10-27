@@ -62,11 +62,11 @@ public class totp {
     /** Verify Code
       *    Secret - The shared secret between client and server.
       *    code   - The code provided by the client
-      *    Checks 10 minutes in the past and future, 40 possible correct codes compared to input code. 
+      *    Checks 3 minutes in the past and future, 13 possible correct codes compared to input code. 
       */
     public boolean verifyCode (String sharedSecret,
                                       int    code) {
-        return verifyCodeWithSkew (sharedSecret, code, 600);
+        return verifyCodeWithSkew (sharedSecret, code, 180);
     }
 
     /** verifyCodeWithSkew
